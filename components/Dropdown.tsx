@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 import { Label } from "./ui/label";
 import { useTheme } from "next-themes";
 import { Switch } from "./ui/switch";
+import { signOut } from "next-auth/react";
 
 function Dropdown() {
   const [showModeToggle, setShowModeToggle] = useState(false);
@@ -32,7 +33,6 @@ function Dropdown() {
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    // toggle dropdown menutup bila diklik bagian luar dropdown
     function handleOutsideClick(event: MouseEvent) {
       if (!event.target) return;
       if (ref.current && !ref.current.contains(event.target as Node)) {
@@ -94,10 +94,10 @@ function Dropdown() {
               <p>Switch appearance</p>
             </DropdownMenuItem>
 
-            {/* <DropdownMenuItem className="menuItem" onClick={() => signOut()}>
+            <DropdownMenuItem className="menuItem" onClick={() => signOut()}>
               <LogOut size={20} />
               <p>Log out</p>
-            </DropdownMenuItem> */}
+            </DropdownMenuItem>
           </>
         )}
 
