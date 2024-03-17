@@ -1,9 +1,11 @@
 import React from "react";
+import { fetchPost } from "@/lib/data";
 
-function Post() {
-  //  TODO: implement data fetching logic
+async function Posts() {
+  const posts = await fetchPost();
 
+  // console.log(posts);
   return <>{/* Map through post */}</>;
 }
 
-export default Post;
+export default Posts;

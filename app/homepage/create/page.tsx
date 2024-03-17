@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-// import { createPost } from "@/lib/actions";
+import { createPost } from "@/lib/action";
 import { UploadButton } from "@/lib/uploadthing";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
