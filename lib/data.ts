@@ -31,6 +31,6 @@ export async function fetchPost() {
     return data;
   } catch (error) {
     console.log("Database error ==>", error);
-    throw new Error("failed to fetch post");
+    // throw new Error("failed to fetch post");
   }
 }
