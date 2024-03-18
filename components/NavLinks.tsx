@@ -28,9 +28,9 @@ const links = [
     icon: Compass,
   },
   {
-    name: "Reels",
-    href: "/homepage/reels",
-    icon: Clapperboard,
+    name: "Create",
+    href: "/homepage/create",
+    icon: PlusSquare,
   },
   {
     name: "Messages",
@@ -44,9 +44,10 @@ const links = [
     hideOnMobile: true,
   },
   {
-    name: "Create",
-    href: "/homepage/create",
-    icon: PlusSquare,
+    name: "Reels",
+    href: "/homepage/reels",
+    icon: Clapperboard,
+    hideOnMobile: true,
   },
 ];
 

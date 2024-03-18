@@ -1,6 +1,6 @@
 "use client";
 
-// import { bookmarkPost } from "@/lib/actions";
+import { bookmarkPost } from "@/lib/action";
 import { PostWithExtras } from "@/lib/definitions";
 import { cn } from "@/lib/utils";
 import ActionIcon from "@/components/ActionIcon";
@@ -23,7 +23,8 @@ function BookmarkButton({ post, userId }: Props) {
     // @ts-ignore
     (state: SavedPost[], newBookmark: SavedPost) =>
       state.find(predicate)
-        ? state.filter((bookmark) => bookmark.userId !== userId)
+        ? //   here we check if the bookmark already exists, if it does, we remove it, if it doesn't, we add it
+          state.filter((bookmark) => bookmark.userId !== userId)
         : [...state, newBookmark]
   );
 
@@ -32,7 +33,7 @@ function BookmarkButton({ post, userId }: Props) {
       action={async (formData: FormData) => {
         const postId = formData.get("postId");
         addOptimisticBookmark({ postId, userId });
-        // await bookmarkPost(postId);
+        await bookmarkPost(postId);
       }}
       className="ml-auto"
     >

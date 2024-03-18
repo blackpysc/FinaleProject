@@ -4,7 +4,7 @@ import { Card } from "./ui/card";
 import Image from "next/image";
 import { auth } from "@/auth";
 import Link from "next/link";
-import TimeStamp from "./TimeStamp";
+import Timestamp from "./Timestamp";
 import PostOptions from "./PostOptions";
 import PostActions from "./PostActions";
 import Comments from "./Comments";
@@ -27,7 +27,7 @@ async function Post({ post }: { post: PostWithExtras }) {
               <span className="font-medium text-neutral-500 dark:text-neutral-400 text-xs">
                 .
               </span>
-              <TimeStamp createdAt={post.createdAt} />
+              <Timestamp createdAt={post.createdAt} />
             </p>
             <p className="text-xs text-black dark:text-white font-medium">
               Bekasi, Indonesia
@@ -53,11 +53,11 @@ async function Post({ post }: { post: PostWithExtras }) {
           <p>{post.caption}</p>
         </div>
       )}
-      {/* <Comments
+      <Comments
         postId={post.id}
         comments={post.comments}
         user={session?.user}
-      /> */}
+      />
     </div>
   );
 }

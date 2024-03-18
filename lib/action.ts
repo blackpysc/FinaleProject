@@ -9,6 +9,7 @@ import {
   BookmarkSchema,
   CreateComment,
   CreatePost,
+  DeleteComment,
   DeletePost,
   LikeSchema,
 } from "./schema";
@@ -182,7 +183,7 @@ export async function bookmarkPost(value: FormDataEntryValue | null) {
           },
         },
       });
-      revalidatePath("/dashboard");
+      revalidatePath("/homepage");
       return { message: "Unbookmarked Post." };
     } catch (error) {
       return {
@@ -198,7 +199,7 @@ export async function bookmarkPost(value: FormDataEntryValue | null) {
         userId,
       },
     });
-    revalidatePath("/dashboard");
+    revalidatePath("/homepage");
     return { message: "Bookmarked Post." };
   } catch (error) {
     return {
@@ -207,28 +208,30 @@ export async function bookmarkPost(value: FormDataEntryValue | null) {
   }
 }
 
-export async function createComment(value: z.infer<typeof CreateComment>) {
+export async function createComment(values: z.infer<typeof CreateComment>) {
   const userId = await getUserId();
 
-  const validatedField = CreateComment.safeParse(value);
+  const validatedFields = CreateComment.safeParse(values);
 
-  if (!validatedField.success) {
+  if (!validatedFields.success) {
     return {
-      errors: validatedField.error.flatten().fieldErrors,
-      message: "Missing Field. Failed to Create Comment.",
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: "Missing Fields. Failed to Create Comment.",
     };
   }
 
-  const { postId, body } = validatedField.data;
+  const { postId, body } = validatedFields.data;
 
   const post = await prisma.post.findUnique({
     where: {
       id: postId,
     },
   });
+
   if (!post) {
-    throw new Error("Post not found.");
+    throw new Error("Post not found");
   }
+
   try {
     await prisma.comment.create({
       data: {
@@ -238,8 +241,39 @@ export async function createComment(value: z.infer<typeof CreateComment>) {
       },
     });
     revalidatePath("/homepage");
-    return { message: "create comment" };
+    return { message: "Created Comment." };
   } catch (error) {
-    return { message: "Database error failed to create comment" };
+    return { message: "Database Error: Failed to Create Comment." };
+  }
+}
+
+export async function deleteComment(formData: FormData) {
+  const userId = await getUserId();
+
+  const { id } = DeleteComment.parse({
+    id: formData.get("id"),
+  });
+
+  const comment = await prisma.comment.findUnique({
+    where: {
+      id,
+      userId,
+    },
+  });
+
+  if (!comment) {
+    throw new Error("Comment not found");
+  }
+
+  try {
+    await prisma.comment.delete({
+      where: {
+        id,
+      },
+    });
+    revalidatePath("/homepage");
+    return { message: "Deleted Comment." };
+  } catch (error) {
+    return { message: "Database Error: Failed to Delete Comment." };
   }
 }
