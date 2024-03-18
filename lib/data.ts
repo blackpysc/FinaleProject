@@ -68,3 +68,39 @@ export async function fetchPostById(id: string) {
     throw new Error("Database error ");
   }
 }
+
+export async function fetchPostsByUsername(username: string, postId: string) {
+  noStore();
+  try {
+    const data = await prisma.post.findMany({
+      where: {
+        user: {
+          username,
+        },
+        NOT: {
+          id: postId,
+        },
+      },
+      include: {
+        comments: {
+          include: {
+            user: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
+        likes: {
+          include: {
+            user: true,
+          },
+        },
+        savedBy: true,
+        user: true,
+      },
+    });
+  } catch (error) {
+    console.log("Database error ==>", error);
+    throw new Error("Database error ");
+  }
+}

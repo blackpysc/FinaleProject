@@ -1,3 +1,8 @@
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import { auth } from "@/auth";
 import Comment from "@/components/Comment";
 import CommentForm from "@/components/CommentForm";
@@ -5,11 +10,6 @@ import Post from "@/components/Post";
 import PostActions from "@/components/PostActions";
 import PostOptions from "@/components/PostOptions";
 import UserAvatar from "@/components/UserAvatar";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { fetchPostById } from "@/lib/data";
 import Image from "next/image";
@@ -46,7 +46,7 @@ async function SinglePost({ id }: { id: string }) {
               <HoverCardTrigger asChild>
                 <Link
                   className="font-semibold text-sm"
-                  href={`/dashboard/${postUsername}`}
+                  href={`/homepage/${postUsername}`}
                 >
                   {postUsername}
                 </Link>
